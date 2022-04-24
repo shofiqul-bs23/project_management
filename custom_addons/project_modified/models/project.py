@@ -8,6 +8,7 @@ class Project(models.Model):
 
     test = fields.Char()
     rfq_ids = fields.One2many('purchase.order', 'project_id', help="Holds the RFQs ")
+    rfc_count = fields.Integer(default=0, compute = '_count_rfc')
 
     def requisitions(self):
         print("Hello World")
@@ -17,24 +18,6 @@ class Project(models.Model):
             'view_mode': 'form',
             'view_id': self.env.ref("purchase.purchase_order_form").id,
             'context': {'default_project_id': self.id}
-        }
-
-    def open_tree_view(self, context=None):
-        # field_ids = self.env['project.project'].search([('department_id', '=', context['department_id'])]).ids
-
-        # domain = [('id', 'in', field_ids)]
-
-        view_id_tree = self.env['ir.ui.view'].search([('name', '=', "model.tree")])
-        return {
-            'type': 'ir.actions.act_window',
-            'res_model': 'purchase.order',
-            'view_type': 'form',
-            'view_mode': 'tree,form',
-            'views': [(view_id_tree[0].id, 'tree'), (False, 'form')],
-            # 'view_id ref="module_name.tree_view"': '',
-            'view_id': self.env.ref("purchase.purchase_order_kpis_tree").id,
-            'target': 'current',
-            # 'domain': domain,
         }
 
     def show_rfqs(self):
@@ -48,6 +31,10 @@ class Project(models.Model):
             'domain': [('project_id', '=', self.id)]
             # 'view_id': self.env.ref('purchase.purchase_order_kpis_tree').id
         }
+
+    @api.depends('rfq_ids')
+    def _count_rfc(self):
+        self.rfc_count= len(self.rfq_ids.ids)
 
     # return {
     #     'name': _('Create invoice/bill'),
