@@ -17,11 +17,20 @@
                 </xpath>
 
                 <xpath expr="//field[@name='currency_id']" position="after">
-<!--                    <button name="show_rfqs" type="object" class="oe_highlight" string="Show RFQs"/>-->
+                    <!--                    <button name="show_rfqs" type="object" class="oe_highlight" string="Show RFQs"/>-->
                     <button class="oe_stat_button" type="object" icon="fa-book"
-                        name="show_rfqs">
+                            name="show_rfqs">
                         <field name="rfc_count" string="RFQs" widget="statinfo"/>
-                 </button>
+                    </button>
+                </xpath>
+
+                <xpath expr="//page[@name='settings']" position="after">
+                    <page name="cost_estimation" string="Cost Estimation">
+
+                    </page>
+                    <page name="real_cost" string="Real Cost">
+
+                    </page>
                 </xpath>
 
             </field>

@@ -8,11 +8,16 @@
             <field name='inherit_id' ref="purchase.purchase_order_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='partner_id']" position="before">
-
                     <field name = "project_id" string="Project"/>
+                </xpath>
+
+                <xpath expr="//button[@name='button_approve']" position="after">
+                    <button name="request_internal_transfer" type="object" states="to approve" string="Request for Internal Transfer" class="oe_highlight" groups="purchase.group_purchase_manager" data-hotkey="z"/>
                 </xpath>
             </field>
         </record>
 
     </data>
 </odoo>
+
+<!--<button name="button_approve" type="object" states="to approve" string="Approve Order" class="oe_highlight" groups="purchase.group_purchase_manager" data-hotkey="z"/>-->
