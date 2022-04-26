@@ -33,6 +33,11 @@
                     </page>
                 </xpath>
 
+
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="total_estimated_cost"/>
+                </xpath>
+
             </field>
         </record>
 

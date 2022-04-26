@@ -11,7 +11,7 @@ class Project(models.Model):
     rfc_count = fields.Integer(default=0, compute = '_count_rfc')
 
     estimation_line_ids = fields.One2many('estimation.line', 'project_id')
-
+    total_estimated_cost = fields.Float(compute = 'cal_total_estimated_cost')
 
 
     def requisitions(self):
@@ -48,3 +48,10 @@ class Project(models.Model):
     #     'view_id': self.env.ref('account.view_move_form').id,
     #     'context': ctx,
     # }
+
+    def cal_total_estimated_cost(self):
+        for rec in self:
+            temp = 0
+            for x in rec.estimation_line_ids:
+                temp += x.total_price
+            rec.total_estimated_cost = temp
