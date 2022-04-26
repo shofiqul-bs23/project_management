@@ -1,0 +1,34 @@
+<odoo>
+
+    <record id="estimation_line_tree" model="ir.ui.view">
+        <field name="name">estimation.line.tree</field>
+        <field name="model">estimation.line</field>
+        <field name="arch" type="xml">
+            <tree string="Channel">
+                <field name="product_id"/>
+                <field name="quantity"/>
+                <field name="price"/>
+                <field name="total_price"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="estimation_line_form" model="ir.ui.view">
+        <field name="name">estimation.line.form</field>
+        <field name="model">estimation.line</field>
+        <field name="arch" type="xml">
+            <form string="Channel">
+                <sheet>
+                    <group>
+                        <field name="product_id" string="Product"/>
+                        <field name="quantity"/>
+                        <field name="price"/>
+                        <field name="total_price"/>
+                    </group>
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+</odoo>

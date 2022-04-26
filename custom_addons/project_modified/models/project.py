@@ -10,6 +10,10 @@ class Project(models.Model):
     rfq_ids = fields.One2many('purchase.order', 'project_id', help="Holds the RFQs ")
     rfc_count = fields.Integer(default=0, compute = '_count_rfc')
 
+    estimation_line_ids = fields.One2many('estimation.line', 'project_id')
+
+
+
     def requisitions(self):
         print("Hello World")
         return {

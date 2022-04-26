@@ -1,2 +1,2 @@
-# id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-# access_project_modified,access_project_modified,model_project_modified,base.group_user,1,1,1,1
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+project_modified.access_estimation_line,access_estimation_line,project_modified.model_estimation_line,base.group_user,1,1,1,1

@@ -19,7 +19,8 @@
         'security/ir.model.access.csv',
 
         'views/project_project_modified.xml',
-        'views/purchase_order_inherited.xml'
+        'views/purchase_order_inherited.xml',
+        'views/estimation_views.xml'
 
     ]
 }
