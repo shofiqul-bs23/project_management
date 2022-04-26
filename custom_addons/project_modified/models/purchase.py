@@ -9,14 +9,29 @@ class Purchase(models.Model):
     project_id = fields.Many2one('project.project', help="Holds the project that this RFQ includes.")
 
     def request_internal_transfer(self):
+        lines = self.order_line
+
+        res = list()
+
+        for line in lines:
+            vals = {'product_id': line.product_id.ids[0] ,'product_uom_qty' : line.product_uom_qty,'name':line.product_id.display_name,'product_uom':line.product_uom.id,
+                    'location_id':1, 'location_dest_id':1}
+            t = self.env['stock.move'].create(vals)
+            res.append(t.id)
+
+
         return {
             'res_model': 'stock.picking',
             'type': 'ir.actions.act_window',
             'view_mode': 'form',
             # 'view_id': self.env.ref("purchase.purchase_order_form").id,
-            'context': {'default_picking_type_id': self.fetch_it_id()}
+            'context': {'default_picking_type_id': self.fetch_it_id(),
+                        'default_move_ids_without_package':res,
+                        'default_partner_id':self.read()[0]['company_id'][0]
+                        }
         }
 
+    # it == internal transfer
     def fetch_it_id(self):
         # return 5
         picking_types = self.env['stock.picking.type'].search([])

@@ -4,7 +4,7 @@
         <field name="name">estimation.line.tree</field>
         <field name="model">estimation.line</field>
         <field name="arch" type="xml">
-            <tree string="Channel">
+            <tree string="Channel" editable="bottom">
                 <field name="product_id"/>
                 <field name="quantity"/>
                 <field name="price"/>
