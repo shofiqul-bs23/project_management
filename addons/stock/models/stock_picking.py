@@ -526,6 +526,7 @@ class Picking(models.Model):
                 picking.state = 'cancel'
             elif picking_moves_state_map[picking_id]['all_cancel_done']:
                 picking.state = 'done'
+
             else:
                 relevant_move_state = self.env['stock.move'].browse(picking_move_lines[picking_id])._get_relevant_state_among_moves()
                 if picking.immediate_transfer and relevant_move_state not in ('draft', 'cancel', 'done'):

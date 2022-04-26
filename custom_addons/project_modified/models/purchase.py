@@ -27,7 +27,8 @@ class Purchase(models.Model):
             # 'view_id': self.env.ref("purchase.purchase_order_form").id,
             'context': {'default_picking_type_id': self.fetch_it_id(),
                         'default_move_ids_without_package':res,
-                        'default_partner_id':self.read()[0]['company_id'][0]
+                        'default_partner_id':self.read()[0]['company_id'][0],
+                        # 'order':self
                         }
         }
 

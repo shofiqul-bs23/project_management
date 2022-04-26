@@ -17,7 +17,7 @@
 
     'data': [
         'security/ir.model.access.csv',
-
+        'security/security.xml',
         'views/project_project_modified.xml',
         'views/purchase_order_inherited.xml',
         'views/estimation_views.xml'
