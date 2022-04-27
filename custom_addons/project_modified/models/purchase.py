@@ -8,6 +8,8 @@ class Purchase(models.Model):
 
     project_id = fields.Many2one('project.project', help="Holds the project that this RFQ includes.")
 
+
+
     def request_internal_transfer(self):
         lines = self.order_line
 
