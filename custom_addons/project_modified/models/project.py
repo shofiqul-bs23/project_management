@@ -15,30 +15,21 @@ class Project(models.Model):
 
 
     def requisitions(self):
-        for rec in self:
 
-            # new_purchase_order = self.env['purchase.order'].create(
-            #     {
-            #
-            #     }
-            # )
+        # lines = list()
+        # line = self.estimation_line_ids[0]
+        # 1
 
-            lines = list()
-            for line in rec.estimation_line_ids:
-
-                search_ids = self.env['purchase.order'].search([]).ids
-                last_id = search_ids and max(search_ids)
-
-                vals = {
-                    "product_id": line.product_id.id,
-                    "name" : 'dummy',
-                    "product_qty" : line.quantity,
-                    "price_unit" : line.price,
-                    "order_id" : 1
-                }
-
-                t = self.env['purchase.order.line'].create(vals)
-                lines.append(t.id)
+        # vals = {
+        #     "product_id": line.product_id.id,
+        #     "name" : line.product_id.name,
+        #     "product_qty" : line.quantity,
+        #     "price_unit" : line.price,
+        #     # "order_id" : 1
+        # }
+        #
+        # t = self.env['purchase.order.line'].create(vals)
+        # lines.append(t.id)
 
 
         return {
@@ -46,11 +37,45 @@ class Project(models.Model):
             # 'res_id' : 1,
             'type': 'ir.actions.act_window',
             'view_mode': 'form',
-            'view_id': self.env.ref("purchase.purchase_order_form").id,
+            # 'view_id': self.env.ref("purchase.purchase_order_form").id,
             'context': {'default_project_id': self.id,
-                        'default_order_line': lines
+                        'default_order_line': [(0,0,{"product_id": line.product_id.id, "name": line.product_id.name, "product_qty" : line.quantity, "price_unit" : line.price,'product_uom':line.product_id.uom_id.id })
+                                               for line in self.estimation_line_ids
+                                               ],
                         }
         }
+
+        # lines = list()
+        # for line in self.estimation_line_ids:
+        #
+        #     # search_ids = self.env['purchase.order'].search([]).ids
+        #     # last_id = search_ids and max(search_ids)
+        #
+        #     vals = {
+        #         "product_id": line.product_id.id,
+        #         "name" : line.product_id.name,
+        #         "product_qty" : line.quantity,
+        #         "price_unit" : line.price,
+        #         # "order_id" : 1
+        #     }
+        #
+        #     t = self.env['purchase.order.line'].create(vals)
+        #     lines.append(t.id)
+        #
+        #
+        # return {
+        #     'res_model': 'purchase.order',
+        #     # 'res_id' : 1,
+        #     'type': 'ir.actions.act_window',
+        #     'view_mode': 'form',
+        #     # 'view_id': self.env.ref("purchase.purchase_order_form").id,
+        #     'context': {'default_project_id': self.id,
+        #                 'default_order_line': lines,
+        #                 'default_partner_id':1
+        #                 }
+        # }
+
+
 
     def show_rfqs(self):
         self.ensure_one()

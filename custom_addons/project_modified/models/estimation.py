@@ -6,6 +6,7 @@ class Estimation(models.Model):
     _description = 'Simply an estimation line'
 
     product_id = fields.Many2one('product.template')
+    # product_uom =
     quantity = fields.Integer(default=1)
     price = fields.Float(default=1)
     total_price = fields.Float(compute="cal_total_price")
