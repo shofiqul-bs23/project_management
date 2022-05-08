@@ -20,7 +20,8 @@
         'security/security.xml',
         'views/project_project_modified.xml',
         'views/purchase_order_inherited.xml',
-        'views/estimation_views.xml'
+        'views/estimation_views.xml',
+        'views/purchase_order_line_inherited.xml',
 
     ]
 }

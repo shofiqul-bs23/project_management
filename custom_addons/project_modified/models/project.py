@@ -15,16 +15,17 @@ class Project(models.Model):
 
 
     def requisitions(self):
+        data = [(0,0,{"product_id": line.product_id.id, "name": line.product_id.name, "product_qty" : (line.quantity-line.quantity_done), "price_unit" : line.price,'product_uom':line.product_id.uom_id.id, 'estimation_line': line.id})
+                                               for line in self.estimation_line_ids
+                                               ]
         return {
             'res_model': 'purchase.order',
-            # 'res_id' : 1,
             'type': 'ir.actions.act_window',
             'view_mode': 'form',
-            # 'view_id': self.env.ref("purchase.purchase_order_form").id,
+            'view_id': self.env.ref("purchase.purchase_order_form").id,
+            # 'res_id': new_purchase_order.id,
             'context': {'default_project_id': self.id,
-                        'default_order_line': [(0,0,{"product_id": line.product_id.id, "name": line.product_id.name, "product_qty" : (line.quantity-line.quantity_done), "price_unit" : line.price,'product_uom':line.product_id.uom_id.id,'estimation_line': line.id})
-                                               for line in self.estimation_line_ids
-                                               ],
+                        'default_order_line': data,
                         }
         }
 

@@ -1,6 +1,16 @@
 from odoo import fields, models, api
 
 
+class PurchaseOrderLine(models.Model):
+    _inherit = "purchase.order.line"
+
+    estimation_line = fields.Many2one('estimation.line', 'purchase_lines')
+
+    def create(self, vals_list):
+        print(vals_list)
+        return super(PurchaseOrderLine, self).create(vals_list)
+
+
 class Purchase(models.Model):
     # _name = 'project.modified'
     _inherit = 'purchase.order'
@@ -42,10 +52,4 @@ class Purchase(models.Model):
             if x.name == 'Internal Transfers':
                 return x.id
         return True
-
-
-class PurchaseOrderLine(models.Model):
-    _inherit = "purchase.order.line"
-
-    estimation_line = fields.Many2one('estimation.line')
 
