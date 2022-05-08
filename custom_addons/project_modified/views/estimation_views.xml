@@ -10,6 +10,7 @@
                 <field name="quantity_done" />
                 <field name="price"/>
                 <field name="total_price"/>
+                <field name = 'purchase_lines'/>
             </tree>
         </field>
     </record>

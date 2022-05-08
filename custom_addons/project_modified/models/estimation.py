@@ -9,7 +9,7 @@ class Estimation(models.Model):
     quantity = fields.Integer(default=1)
     price = fields.Float(default=1)
     total_price = fields.Float(compute="cal_total_price")
-    quantity_done = fields.Integer(default=0)
+    quantity_done = fields.Integer(compute="_compute_quantity_done", default=0)
 
     project_id = fields.Many2one('project.project')
     purchase_lines = fields.One2many('purchase.order.line','estimation_line')
@@ -19,3 +19,11 @@ class Estimation(models.Model):
     def cal_total_price(self):
         for rec in self:
             rec.total_price = rec.price * rec.quantity
+
+    @api.depends('purchase_lines')
+    def _compute_quantity_done(self):
+        for rec in self:
+            qty = 0
+            for x in rec.purchase_lines:
+                qty += x.qty_received
+            rec.quantity_done = qty
