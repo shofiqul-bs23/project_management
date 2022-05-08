@@ -6,9 +6,9 @@ class PurchaseOrderLine(models.Model):
 
     estimation_line = fields.Many2one('estimation.line', 'purchase_lines')
 
-    def create(self, vals_list):
-        print(vals_list)
-        return super(PurchaseOrderLine, self).create(vals_list)
+    # def create(self, vals_list):
+    #     print(vals_list)
+    #     return super(PurchaseOrderLine, self).create(vals_list)
 
 
 class Purchase(models.Model):
@@ -23,14 +23,20 @@ class Purchase(models.Model):
     def request_internal_transfer(self):
         lines = self.order_line
 
-        res = list()
+        # res = list()
+        # self.button_approve()
+        # for line in lines:
+        #     vals = {'product_id': line.product_id.ids[0] ,'product_uom_qty' : line.product_uom_qty,'name':line.product_id.display_name,'product_uom':line.product_uom.id,
+        #             'location_id':1, 'location_dest_id':1}
+        #     t = self.env['stock.move'].create(vals)
+        #     res.append(t.id)
 
-        for line in lines:
-            vals = {'product_id': line.product_id.ids[0] ,'product_uom_qty' : line.product_uom_qty,'name':line.product_id.display_name,'product_uom':line.product_uom.id,
-                    'location_id':1, 'location_dest_id':1}
-            t = self.env['stock.move'].create(vals)
-            res.append(t.id)
+        li = lines[0]
 
+        res = [(0, 0, {'product_id': line.product_id.ids[0], 'product_uom_qty': line.product_uom_qty,
+                       'name': line.product_id.display_name, 'product_uom': line.product_uom.id})
+               for line in lines
+               ]
 
         return {
             'res_model': 'stock.picking',
