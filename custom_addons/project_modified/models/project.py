@@ -15,23 +15,6 @@ class Project(models.Model):
 
 
     def requisitions(self):
-
-        # lines = list()
-        # line = self.estimation_line_ids[0]
-        # 1
-
-        # vals = {
-        #     "product_id": line.product_id.id,
-        #     "name" : line.product_id.name,
-        #     "product_qty" : line.quantity,
-        #     "price_unit" : line.price,
-        #     # "order_id" : 1
-        # }
-        #
-        # t = self.env['purchase.order.line'].create(vals)
-        # lines.append(t.id)
-
-
         return {
             'res_model': 'purchase.order',
             # 'res_id' : 1,
@@ -39,7 +22,7 @@ class Project(models.Model):
             'view_mode': 'form',
             # 'view_id': self.env.ref("purchase.purchase_order_form").id,
             'context': {'default_project_id': self.id,
-                        'default_order_line': [(0,0,{"product_id": line.product_id.id, "name": line.product_id.name, "product_qty" : line.quantity, "price_unit" : line.price,'product_uom':line.product_id.uom_id.id })
+                        'default_order_line': [(0,0,{"product_id": line.product_id.id, "name": line.product_id.name, "product_qty" : line.quantity, "price_unit" : line.price,'product_uom':line.product_id.uom_id.id,'estimation_line': 1})
                                                for line in self.estimation_line_ids
                                                ],
                         }

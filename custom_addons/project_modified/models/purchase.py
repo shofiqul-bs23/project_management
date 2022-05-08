@@ -42,3 +42,10 @@ class Purchase(models.Model):
             if x.name == 'Internal Transfers':
                 return x.id
         return True
+
+
+class PurchaseOrderLine(models.Model):
+    _inherit = "purchase.order.line"
+
+    estimation_line = fields.Many2one('estimation.line')
+
