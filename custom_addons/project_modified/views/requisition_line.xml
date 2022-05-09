@@ -1,0 +1,17 @@
+<odoo>
+    <record id="requisition_line_tree" model="ir.ui.view">
+        <field name="name">requisition.line.tree</field>
+        <field name="model">requisition.line</field>
+        <field name="arch" type="xml">
+            <tree string="Channel" editable="bottom">
+                <field name="product_id"/>
+                <field name="name"/>
+                <field name="quantity"/>
+                <field name="quantity_done"/>
+                <field name="price_unit"/>
+                <field name="total_price"/>
+            </tree>
+        </field>
+    </record>
+</odoo>
+

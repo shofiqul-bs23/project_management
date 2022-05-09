@@ -12,7 +12,10 @@ class Estimation(models.Model):
     quantity_done = fields.Integer(compute="_compute_quantity_done", default=0)
 
     project_id = fields.Many2one('project.project')
+
     purchase_lines = fields.One2many('purchase.order.line', 'estimation_line')
+
+    requisition_line_ids = fields.One2many('requisition.line','estimation_line_id')
 
 
     @api.depends('quantity','price')

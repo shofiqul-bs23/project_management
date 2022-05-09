@@ -5,7 +5,7 @@ class PurchaseOrderLine(models.Model):
     _inherit = "purchase.order.line"
 
     estimation_line = fields.Many2one('estimation.line', 'purchase_lines')
-
+    requisition_line_id = fields.Many2one('requisition.line')
     # def create(self, vals_list):
     #     print(vals_list)
     #     return super(PurchaseOrderLine, self).create(vals_list)

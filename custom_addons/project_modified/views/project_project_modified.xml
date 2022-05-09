@@ -12,12 +12,21 @@
                     <button name="requisitions" type="object" string="Meterial Requisition"/>
                 </xpath>
 
+                <xpath expr="//header" position="inside">
+                    <button name="new_requisitions" type="object" string="Material Requisition (new)"/>
+                </xpath>
+
 <!--                <xpath expr="//header" position="inside">-->
 <!--                    <button name="show_rfqs" type="object" class="oe_highlight" string="Show RFQs"/>-->
 <!--                </xpath>-->
 
                 <xpath expr="//field[@name='currency_id']" position="after">
                     <!--                    <button name="show_rfqs" type="object" class="oe_highlight" string="Show RFQs"/>-->
+                    <button class="oe_stat_button" type="object" icon="fa-book"
+                            name="show_requisitions">
+                        <field name="requisition_count" string="RequisitionS" widget="statinfo"/>
+                    </button>
+
                     <button class="oe_stat_button" type="object" icon="fa-book"
                             name="show_rfqs">
                         <field name="rfc_count" string="RFQs" widget="statinfo"/>

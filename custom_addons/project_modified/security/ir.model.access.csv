@@ -1,2 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 project_modified.access_estimation_line,access_estimation_line,project_modified.model_estimation_line,base.group_user,1,1,1,1
+project_modified.access_requisition_line,access_requisition_line,project_modified.model_requisition_line,base.group_user,1,1,1,1
+project_modified.access_requisition,access_requisition,project_modified.model_requisition,base.group_user,1,1,1,1

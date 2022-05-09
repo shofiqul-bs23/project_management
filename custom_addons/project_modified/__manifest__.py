@@ -22,6 +22,8 @@
         'views/purchase_order_inherited.xml',
         'views/estimation_views.xml',
         'views/purchase_order_line_inherited.xml',
+        'views/requisition_line.xml',
+        'views/requisition.xml'
 
     ]
 }
