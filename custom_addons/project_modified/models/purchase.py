@@ -86,7 +86,9 @@ class Purchase(models.Model):
                         }
         }
 
+
     # it == internal transfer
+    # returning the id of Operation Type: Internal Transfer
     def fetch_it_id(self):
         # return 5
         picking_types = self.env['stock.picking.type'].search([])
