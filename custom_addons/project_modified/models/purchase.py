@@ -46,7 +46,8 @@ class Purchase(models.Model):
             'context': {'default_picking_type_id': self.fetch_it_id(),
                         'default_move_ids_without_package':res,
                         'default_partner_id':self.read()[0]['company_id'][0],
-                        # 'order':self
+                        'default_location_dest_id': self.project_id.location.id,
+                        'default_location_id': self.project_id.location.id
                         }
         }
 

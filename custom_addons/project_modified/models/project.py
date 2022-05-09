@@ -4,24 +4,26 @@ from odoo import fields, models, api
 class Project(models.Model):
     # _name = 'project.modified'
     _inherit = 'project.project'
-    _description = 'This will modify the project'
+    _description = 'Custom Project'
 
     test = fields.Char()
     rfq_ids = fields.One2many('purchase.order', 'project_id', help="Holds the RFQs ")
-    rfc_count = fields.Integer(default=0, compute = '_count_rfc')
+    rfc_count = fields.Integer(default=0, compute='_count_rfc')
 
     estimation_line_ids = fields.One2many('estimation.line', 'project_id')
-    total_estimated_cost = fields.Float(compute = 'cal_total_estimated_cost')
+    total_estimated_cost = fields.Float(compute='cal_total_estimated_cost')
 
+    location = fields.Many2one('stock.location')
 
     def requisitions(self):
-        data = [(0,0,{"product_id": line.product_id.id, "name": line.product_id.name, "product_qty" : (line.quantity-line.quantity_done), "price_unit" : line.price,'product_uom':line.product_id.uom_id.id, 'estimation_line': line.id})
-                                               for line in self.estimation_line_ids
-                                               ]
+        data = [(0, 0, {"product_id": line.product_id.id, "name": line.product_id.name,
+                        "product_qty": (line.quantity - line.quantity_done), "price_unit": line.price,
+                        'product_uom': line.product_id.uom_id.id, 'estimation_line': line.id})
+                for line in self.estimation_line_ids
+                ]
         for x in data:
-            if x[2]['product_qty'] == 0 :
+            if x[2]['product_qty'] == 0:
                 data.remove(x)
-
 
         return {
             'res_model': 'purchase.order',
@@ -33,7 +35,6 @@ class Project(models.Model):
                         'default_order_line': data,
                         }
         }
-
 
     def show_rfqs(self):
         self.ensure_one()
@@ -49,8 +50,7 @@ class Project(models.Model):
 
     @api.depends('rfq_ids')
     def _count_rfc(self):
-        self.rfc_count= len(self.rfq_ids.ids)
-
+        self.rfc_count = len(self.rfq_ids.ids)
 
     def cal_total_estimated_cost(self):
         for rec in self:

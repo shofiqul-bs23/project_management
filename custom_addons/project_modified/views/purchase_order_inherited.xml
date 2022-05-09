@@ -14,6 +14,10 @@
                 <xpath expr="//button[@name='button_approve']" position="after">
                     <button name="request_internal_transfer" type="object" states="to approve" string="Request for Internal Transfer" class="oe_highlight" groups="purchase.group_purchase_manager" data-hotkey="z"/>
                 </xpath>
+
+                <xpath expr="//button[@name='button_approve']" position="after">
+                    <button name="request_internal_transfer" type="object" string="Request Internal Transfer" class="oe_highlight" data-hotkey="z"/>
+                </xpath>
             </field>
         </record>
 
