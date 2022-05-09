@@ -18,34 +18,69 @@ class Purchase(models.Model):
 
     project_id = fields.Many2one('project.project', help="Holds the project that this RFQ includes.")
 
-
+    ################################################################Previous 'request_internal_transfer' function
+    # def request_internal_transfer(self):
+    #     lines = self.order_line
+    #     # res = list()
+    #     # self.button_approve()
+    #     # for line in lines:
+    #     #     vals = {'product_id': line.product_id.ids[0] ,'product_uom_qty' : line.product_uom_qty,'name':line.product_id.display_name,'product_uom':line.product_uom.id,
+    #     #             'location_id':1, 'location_dest_id':1}
+    #     #     t = self.env['stock.move'].create(vals)
+    #     #     res.append(t.id)
+    #
+    #     li = lines[0]
+    #
+    #     res = [(0, 0, {'product_id': line.product_id.ids[0], 'product_uom_qty': line.product_uom_qty,
+    #                    'name': line.product_id.display_name, 'product_uom': line.product_uom.id})
+    #            for line in lines
+    #            ]
+    #
+    #     return {
+    #         'res_model': 'stock.picking',
+    #         'type': 'ir.actions.act_window',
+    #         'view_mode': 'form',
+    #         # 'view_id': self.env.ref("purchase.purchase_order_form").id,
+    #         'context': {'default_picking_type_id': self.fetch_it_id(),
+    #                     'default_move_ids_without_package':res,
+    #                     'default_partner_id':self.read()[0]['company_id'][0],
+    #                     'default_location_dest_id': self.project_id.location.id,
+    #                     'default_location_id': self.project_id.location.id
+    #                     }
+    #     }
 
     def request_internal_transfer(self):
         lines = self.order_line
 
-        # res = list()
-        # self.button_approve()
-        # for line in lines:
-        #     vals = {'product_id': line.product_id.ids[0] ,'product_uom_qty' : line.product_uom_qty,'name':line.product_id.display_name,'product_uom':line.product_uom.id,
-        #             'location_id':1, 'location_dest_id':1}
-        #     t = self.env['stock.move'].create(vals)
-        #     res.append(t.id)
-
-        li = lines[0]
-
         res = [(0, 0, {'product_id': line.product_id.ids[0], 'product_uom_qty': line.product_uom_qty,
-                       'name': line.product_id.display_name, 'product_uom': line.product_uom.id})
+                       'name': line.product_id.display_name, 'product_uom': line.product_uom.id,
+                       'location_id':self.project_id.location.id, 'location_dest_id':self.project_id.location.id
+                       })
                for line in lines
                ]
+
+        vals = {'picking_type_id': self.fetch_it_id(),
+                'move_ids_without_package': res,
+                'partner_id': self.read()[0]['company_id'][0],
+                'location_dest_id': self.project_id.location.id,
+                'location_id': self.project_id.location.id
+                }
+        IT = self.env['stock.picking'].create(
+            vals
+        )
+
+        IT.action_confirm()
+        print(IT.id)
 
         return {
             'res_model': 'stock.picking',
             'type': 'ir.actions.act_window',
             'view_mode': 'form',
             # 'view_id': self.env.ref("purchase.purchase_order_form").id,
+            'res_id': IT.id,                                                        #Res_id opens the specific 'stock.picking'
             'context': {'default_picking_type_id': self.fetch_it_id(),
-                        'default_move_ids_without_package':res,
-                        'default_partner_id':self.read()[0]['company_id'][0],
+                        'default_move_ids_without_package': res,
+                        'default_partner_id': self.read()[0]['company_id'][0],
                         'default_location_dest_id': self.project_id.location.id,
                         'default_location_id': self.project_id.location.id
                         }
@@ -59,4 +94,3 @@ class Purchase(models.Model):
             if x.name == 'Internal Transfers':
                 return x.id
         return True
-
