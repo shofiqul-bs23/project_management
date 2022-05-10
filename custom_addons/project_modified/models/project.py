@@ -10,7 +10,7 @@ class Project(models.Model):
     rfq_ids = fields.One2many('purchase.order', 'project_id', help="Holds the RFQs ")
     rfc_count = fields.Integer(default=0, compute='_count_rfc')
 
-    requisition_ids = fields.One2many('requisition','project_id', help = "Holds the Requisitions")
+    requisition_ids = fields.One2many('custom.requisition','project_id', help = "Holds the Requisitions")
     requisition_count = fields.Integer(default=0, compute='_count_requisition')
 
     estimation_line_ids = fields.One2many('estimation.line', 'project_id')
@@ -29,7 +29,7 @@ class Project(models.Model):
                 data.remove(x)
 
         return {
-            'res_model': 'requisition',
+            'res_model': 'custom.requisition',
             'type': 'ir.actions.act_window',
             'view_mode': 'form',
             # 'view_id': self.env.ref("purchase.purchase_order_form").id,
@@ -81,7 +81,7 @@ class Project(models.Model):
             'name': "Requisition form",
             'type': 'ir.actions.act_window',
             'view_mode': 'tree,form',
-            'res_model': 'requisition',
+            'res_model': 'custom.requisition',
             'domain': [('project_id', '=', self.id)]
             # 'view_id': self.env.ref('purchase.purchase_order_kpis_tree').id
         }

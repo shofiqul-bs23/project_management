@@ -14,7 +14,7 @@ class RequisitionLine(models.Model):
     quantity_done = fields.Integer(compute="_compute_quantity_done", default=0)
     # quantity_done = fields.Integer(default=0)
 
-    requisition = fields.Many2one('requisition')
+    requisition = fields.Many2one('custom.requisition')
 
     #backed
     estimation_line_id = fields.Many2one('estimation.line')
@@ -42,7 +42,7 @@ class RequisitionLine(models.Model):
 
 
 class Requisition(models.Model):
-    _name = 'requisition'
+    _name = 'custom.requisition'
     _description = 'Requisition'
 
     state = fields.Selection(

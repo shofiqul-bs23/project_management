@@ -1,7 +1,7 @@
 <odoo>
     <record id="requisition_form" model="ir.ui.view">
         <field name="name">requisition.form</field>
-        <field name="model">requisition</field>
+        <field name="model">custom.requisition</field>
         <field name="arch" type="xml">
             <form string="Requisition Form">
                 <header>
@@ -36,13 +36,12 @@
 
      <record id="requisition_tree" model="ir.ui.view">
         <field name="name">requisition.tree</field>
-        <field name="model">requisition</field>
+        <field name="model">custom.requisition</field>
         <field name="arch" type="xml">
             <tree string="Requisition Tree">
                 <field name="id"/>
                 <field name="display_name"/>
                 <field name="state"/>
-
 
             </tree>
         </field>
