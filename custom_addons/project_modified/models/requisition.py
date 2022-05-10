@@ -52,7 +52,7 @@ class Requisition(models.Model):
 
     project_id = fields.Many2one('project.project')
 
-    requisition_line_ids = fields.One2many('requisition.line','requisition')
+    requisition_line_ids = fields.One2many('requisition.line', 'requisition')
     purchase_order_ids = fields.One2many('purchase.order', 'requisition_id')
 
     def requisitions(self):
