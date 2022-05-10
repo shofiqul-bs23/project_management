@@ -15,11 +15,13 @@ class RequisitionLine(models.Model):
     # quantity_done = fields.Integer(default=0)
 
     requisition = fields.Many2one('requisition')
+
     #backed
     estimation_line_id = fields.Many2one('estimation.line')
     purchase_order_line_ids = fields.Many2one('purchase.order.line','requisition_line_id')
 
     purchase_lines = fields.One2many('purchase.order.line', 'estimation_line')
+
 
     @api.depends('quantity', 'price_unit')
     def cal_total_price(self):
@@ -51,6 +53,7 @@ class Requisition(models.Model):
     project_id = fields.Many2one('project.project')
 
     requisition_line_ids = fields.One2many('requisition.line','requisition')
+    purchase_order_ids = fields.One2many('purchase.order', 'requisition_id')
 
     def requisitions(self):
         data = [(0, 0, {"product_id": line.product_id.id, "name": line.product_id.name,
@@ -58,9 +61,9 @@ class Requisition(models.Model):
                         'product_uom': line.product_id.uom_id.id, 'requisition_line_id': line.id})
                 for line in self.requisition_line_ids
                 ]
-        for x in data:
-            if x[2]['product_qty'] == 0:
-                data.remove(x)
+        # for x in data:
+        #     if x[2]['product_qty'] == 0:
+        #         data.remove(x)
 
         return {
             'res_model': 'purchase.order',
@@ -70,6 +73,7 @@ class Requisition(models.Model):
             # 'res_id': new_purchase_order.id,
             'context': {'default_project_id': self.project_id.id,
                         'default_order_line': data,
+                        'default_requisition_id': self.id
                         }
         }
 

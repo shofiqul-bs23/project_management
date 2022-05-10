@@ -19,6 +19,10 @@
                         <page name="products" string="Products">
                             <field name="requisition_line_ids"/>
                         </page>
+                        <page name="purchase_orders" string="Purchase Orders">
+                            <field name="purchase_order_ids"/>
+                        </page>
+
                     </notebook>
 
 
@@ -38,6 +42,7 @@
                 <field name="id"/>
                 <field name="display_name"/>
                 <field name="state"/>
+
 
             </tree>
         </field>

@@ -9,6 +9,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='partner_id']" position="before">
                     <field name = "project_id" string="Project"/>
+                    <field name="requisition_id" string="Requisition ID"/>
                 </xpath>
 
                 <xpath expr="//button[@name='button_approve']" position="after">

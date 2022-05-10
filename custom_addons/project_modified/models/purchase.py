@@ -17,6 +17,8 @@ class Purchase(models.Model):
     _description = 'This will modify the project'
 
     project_id = fields.Many2one('project.project', help="Holds the project that this RFQ includes.")
+    requisition_id = fields.Many2one('requisition')
+
 
     ################################################################Previous 'request_internal_transfer' function
     # def request_internal_transfer(self):

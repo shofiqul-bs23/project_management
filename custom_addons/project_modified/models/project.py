@@ -9,6 +9,7 @@ class Project(models.Model):
     test = fields.Char()
     rfq_ids = fields.One2many('purchase.order', 'project_id', help="Holds the RFQs ")
     rfc_count = fields.Integer(default=0, compute='_count_rfc')
+
     requisition_ids = fields.One2many('requisition','project_id', help = "Holds the Requisitions")
     requisition_count = fields.Integer(default=0, compute='_count_requisition')
 
