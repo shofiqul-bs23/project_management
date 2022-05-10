@@ -79,4 +79,54 @@ class Requisition(models.Model):
         }
 
 
+    def create_internal_transfer(self):
+        print("Requesting Internal Transfer")
+
+        lines = self.requisition_line_ids
+
+        res = [(0, 0, {'product_id': line.product_id.ids[0], 'product_uom_qty': line.quantity,
+                       'name': line.product_id.display_name, 'product_uom': line.product_id.uom_id,
+                       'location_id':self.project_id.location.id, 'location_dest_id':self.project_id.location.id
+                       })
+               for line in lines
+               ]
+
+        vals = {'picking_type_id': self.fetch_it_id(),
+                'move_ids_without_package': res,
+                'partner_id': self.project_id.company_id.id,
+                'location_dest_id': self.project_id.location.id,
+                'location_id': self.project_id.location.id
+                }
+        IT = self.env['stock.picking'].create(
+            vals
+        )
+
+        IT.action_confirm()
+        print(IT.id)
+
+        return {
+            'res_model': 'stock.picking',
+            'type': 'ir.actions.act_window',
+            'view_mode': 'form',
+            # 'view_id': self.env.ref("purchase.purchase_order_form").id,
+            'res_id': IT.id,                                                        #Res_id opens the specific 'stock.picking'
+            # 'context': {'default_picking_type_id': self.fetch_it_id(),
+            #             'default_move_ids_without_package': res,
+            #             'default_partner_id': self.read()[0]['company_id'][0],
+            #             'default_location_dest_id': self.project_id.location.id,
+            #             'default_location_id': self.project_id.location.id
+            #             }
+        }
+
+
+    # it == internal transfer
+    # returning the id of Operation Type: Internal Transfer
+    def fetch_it_id(self):
+        # return 5
+        picking_types = self.env['stock.picking.type'].search([])
+        for x in picking_types:
+            if x.name == 'Internal Transfers':
+                return x.id
+        return True
+
 

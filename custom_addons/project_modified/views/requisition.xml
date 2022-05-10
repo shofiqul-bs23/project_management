@@ -7,6 +7,8 @@
                 <header>
                     <button name="requisitions" string="Request Purchase Order" type="object" class="oe_highlight"/>
 
+                    <button name="create_internal_transfer" string="Request Internal Transfer" type="object" class="oe_highlight"/>
+
                     <field name="state" widget="statusbar" clickable="True"></field>
                 </header>
                 <sheet>
