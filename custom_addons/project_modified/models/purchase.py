@@ -6,9 +6,31 @@ class PurchaseOrderLine(models.Model):
 
     estimation_line = fields.Many2one('estimation.line', 'purchase_lines')
     requisition_line_id = fields.Many2one('requisition.line')
+    old_qty = fields.Float(default=0)
+    new_qty = fields.Float(default=0)
+
     # def create(self, vals_list):
     #     print(vals_list)
     #     return super(PurchaseOrderLine, self).create(vals_list)
+
+    # def write(self, vals):
+    #     print(vals)
+    #     if 'qty_received' in vals:
+    #         print("QTY_RECEIVED changed!")
+    #     # return super(PurchaseOrderLine, self).write(vals)
+    #     return super(PurchaseOrderLine, self).write(vals)
+
+
+    def _compute_qty_received(self):
+        print('sdfsdfsdf')
+        super(PurchaseOrderLine, self)._compute_qty_received()
+        for line in self:
+            if line.new_qty < line.qty_received:
+                line.old_qty = line.new_qty
+                line.new_qty = line.qty_received
+                line.requisition_line_id.quantity_done += (line.new_qty - line.old_qty)
+            print(line.qty_received)
+
 
 
 class Purchase(models.Model):
@@ -98,3 +120,8 @@ class Purchase(models.Model):
             if x.name == 'Internal Transfers':
                 return x.id
         return True
+
+
+    # @api.onchange('order_line')
+    # def update_requisition_qty(self):
+    #     print("Triggered On Change")

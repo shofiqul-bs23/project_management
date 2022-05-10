@@ -8,7 +8,7 @@
     'depends': [
         'base',
         'project',
-        'purchase'
+        'purchase_stock'
     ],
     'installable': True,
     'license': 'LGPL-3',

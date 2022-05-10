@@ -11,8 +11,8 @@ class RequisitionLine(models.Model):
     quantity = fields.Integer(default=0)
     price_unit = fields.Float(default=0)
     total_price = fields.Float(compute="cal_total_price")
-    quantity_done = fields.Integer(compute="_compute_quantity_done", default=0)
-    # quantity_done = fields.Integer(default=0)
+    # quantity_done = fields.Integer(compute="_compute_quantity_done", default=0)
+    quantity_done = fields.Integer(default=0)
 
     requisition = fields.Many2one('custom.requisition')
 
@@ -29,13 +29,13 @@ class RequisitionLine(models.Model):
             rec.total_price = rec.price_unit * rec.quantity
 
 
-    @api.depends('purchase_order_line_ids')
-    def _compute_quantity_done(self):
-        for rec in self:
-            qty = 0
-            for x in rec.purchase_order_line_ids:
-                qty += x.qty_received
-            rec.quantity_done = qty
+    # @api.depends('purchase_order_line_ids')
+    # def _compute_quantity_done(self):
+    #     for rec in self:
+    #         qty = 0
+    #         for x in rec.purchase_order_line_ids:
+    #             qty += x.qty_received
+    #         rec.quantity_done = qty
 
 
 
@@ -53,7 +53,8 @@ class Requisition(models.Model):
     project_id = fields.Many2one('project.project')
 
     requisition_line_ids = fields.One2many('requisition.line', 'requisition')
-    purchase_order_ids = fields.One2many('purchase.order', 'requisition_id')
+
+    purchase_order_ids = fields.One2many('purchase.order', 'requisition_id')              # Holds purchase orders against the requisition
 
     def requisitions(self):
         data = [(0, 0, {"product_id": line.product_id.id, "name": line.product_id.name,
