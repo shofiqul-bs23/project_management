@@ -10,6 +10,7 @@
                 <field name="quantity_done"/>
                 <field name="price_unit"/>
                 <field name="total_price"/>
+                <field name="estimation_line_id"/>
             </tree>
         </field>
     </record>

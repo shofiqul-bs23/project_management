@@ -27,6 +27,6 @@ class Estimation(models.Model):
     def _compute_quantity_done(self):
         for rec in self:
             qty = 0
-            for x in rec.purchase_lines:
-                qty += x.qty_received
+            for x in rec.requisition_line_ids:
+                qty += x.quantity_done
             rec.quantity_done = qty

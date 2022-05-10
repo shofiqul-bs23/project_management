@@ -11,6 +11,7 @@ class Project(models.Model):
     rfc_count = fields.Integer(default=0, compute='_count_rfc')
 
     requisition_ids = fields.One2many('custom.requisition','project_id', help = "Holds the Requisitions")
+
     requisition_count = fields.Integer(default=0, compute='_count_requisition')
 
     estimation_line_ids = fields.One2many('estimation.line', 'project_id')
@@ -20,7 +21,8 @@ class Project(models.Model):
 
     def new_requisitions(self):
         data = [(0, 0, {"product_id": line.product_id.id, "name": line.product_id.name,
-                        "quantity": (line.quantity - line.quantity_done), "price_unit": line.price
+                        "quantity": (line.quantity - line.quantity_done), "price_unit": line.price,
+                        "estimation_line_id": line.id   # Check check check
                         })
                 for line in self.estimation_line_ids
                 ]
